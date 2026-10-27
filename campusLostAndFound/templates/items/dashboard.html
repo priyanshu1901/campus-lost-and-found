@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard - Campus Lost & Found{% endblock %}
+{% block title %}GL Bajaj Campus Lost & Found Portal{% endblock %}
 
 {% block main_class %}{% endblock %}
 
@@ -11,11 +11,10 @@
         <div class="row align-items-center">
             <div class="col-lg-7">
                 <h1 class="display-4 fw-bold mb-3">
-                    Campus Lost & Found Smart Portal
+                    GL Bajaj Campus Lost & Found Portal
                 </h1>
                 <p class="lead mb-4">
-                    Lost something on campus? Found an item? Our AI-powered platform helps 
-                    connect lost items with their owners through smart matching technology.
+                    Lost something at G.L. Bajaj? Found an item on campus? Our smart portal helps students report, discover, and reconnect with lost belongings using AI-assisted matching.
                 </p>
                 <div class="d-flex gap-3 flex-wrap">
                     <a href="{% url 'item_create' %}" class="btn btn-light btn-lg">
@@ -190,7 +189,7 @@
                 </div>
                 <h5>1. Report</h5>
                 <p class="text-muted">
-                    Report your lost or found item with detailed description and photos.
+                    Report a lost or found item with its name, category, photo, date, and campus location, such as a classroom, library, or cafeteria.
                 </p>
             </div>
             <div class="col-md-4 text-center">
@@ -199,7 +198,7 @@
                 </div>
                 <h5>2. Smart Match</h5>
                 <p class="text-muted">
-                    Our AI system automatically finds potential matches using smart algorithms.
+                     AI-assisted matching compares item descriptions to suggest possible matches between lost and found belongings.
                 </p>
             </div>
             <div class="col-md-4 text-center">
@@ -208,10 +207,64 @@
                 </div>
                 <h5>3. Connect</h5>
                 <p class="text-muted">
-                    Contact the owner directly and reunite items with their rightful owners.
+                   Review potential matches and contact the person who posted the item to help reunite belongings with their rightful owners.
                 </p>
             </div>
         </div>
     </div>
 </section>
+<WritingBlock id="61742" variant="standard"><!-- GL Bajaj Campus Portal - Key Features -->
+
+<section class="py-5 bg-white">
+    <div class="container">
+        <h3 class="text-center mb-2">Portal Key Features</h3>
+        <p class="text-muted text-center mb-5">
+            A smarter way to manage lost and found belongings at GL Bajaj.
+        </p>
+
+
+<div class="row g-4">
+<div class="col-md-6 col-lg-3">
+<div class="card h-100 text-center p-3">
+<i class="bi bi-search text-primary display-5 mb-3"></i>
+<h5>Easy Search</h5>
+<p class="text-muted mb-0">
+Search and filter reported items by keyword, category, and status.
+</p>
+</div>
+</div>
+
+<div class="col-md-6 col-lg-3">
+<div class="card h-100 text-center p-3">
+<i class="bi bi-cpu text-success display-5 mb-3"></i>
+<h5>AI-Assisted Matching</h5>
+<p class="text-muted mb-0">
+Find potential lost and found matches through description similarity.
+</p>
+</div>
+</div>
+
+<div class="col-md-6 col-lg-3">
+<div class="card h-100 text-center p-3">
+<i class="bi bi-camera text-info display-5 mb-3"></i>
+<h5>Photo Upload</h5>
+<p class="text-muted mb-0">
+Add item photos and descriptions to help others identify belongings.
+</p>
+</div>
+</div>
+
+<div class="col-md-6 col-lg-3">
+<div class="card h-100 text-center p-3">
+<i class="bi bi-check-circle text-warning display-5 mb-3"></i>
+<h5>Resolution Tracking</h5>
+<p class="text-muted mb-0">
+Mark recovered belongings as resolved and track your own reports.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+</section></WritingBlock>
 {% endblock %}

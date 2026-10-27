@@ -84,7 +84,7 @@ class ItemListView(ListView):
         Search query aur filters apply karta hai.
         """
         # Base queryset - sirf verified aur unresolved items
-        queryset = Item.objects.filter(is_resolved=False)
+        queryset = Item.objects.all()
         
         # Search query apply karna
         query = self.request.GET.get('query', '')
