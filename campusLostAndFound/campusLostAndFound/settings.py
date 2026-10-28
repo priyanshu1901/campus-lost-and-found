@@ -10,14 +10,22 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security key - production mein isko secret rakhna zaroori hai
-SECRET_KEY = 'django-insecure-your-secret-key-change-in-production-123456789'
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-local-development-only'
+)
 
 # Debug mode - development ke liye True, production mein False karna
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
 # Allowed hosts - production mein apna domain add karna
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = os.environ.get(
+    'ALLOWED_HOSTS',
+    'localhost,127.0.0.1'
+).split(',')
 
+if os.environ.get('RENDER_EXTERNAL_HOSTNAME'):
+    ALLOWED_HOSTS.append(os.environ['RENDER_EXTERNAL_HOSTNAME'])
 
 # Application definition - sab installed apps ki list
 INSTALLED_APPS = [
@@ -39,6 +47,7 @@ INSTALLED_APPS = [
 # Middleware configuration - request/response processing ke liye
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -72,12 +81,25 @@ WSGI_APPLICATION = 'campusLostAndFound.wsgi.application'
 
 
 # Database configuration - SQLite use kar rahe hain
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # SQLite database engine
-        'NAME': BASE_DIR / 'db.sqlite3',  # Database file ka naam
+
+# Database configuration
+if os.environ.get('DATABASE_URL'):
+    import dj_database_url
+
+    DATABASES = {
+        'default': dj_database_url.parse(
+            os.environ['DATABASE_URL'],
+            conn_max_age=600
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 
 # Password validation rules - strong passwords ke liye
@@ -99,14 +121,26 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization settings
 LANGUAGE_CODE = 'en-us'  # English language
-TIME_ZONE = 'Asia/Karachi'  # Pakistan timezone
+TIME_ZONE = 'Asia/Kolkata'  # India timezone
 USE_I18N = True  # Internationalization enable
 USE_TZ = True  # Timezone support enable
 
 
 # Static files configuration (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Additional static folders
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
+  # Additional static folders
 
 # Media files configuration - user uploaded files ke liye
 MEDIA_URL = '/media/'
