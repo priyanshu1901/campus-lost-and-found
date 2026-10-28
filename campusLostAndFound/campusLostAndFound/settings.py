@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'crispy_forms',  # Forms ko bootstrap style dene ke liye
     'crispy_bootstrap5',  # Bootstrap 5 template pack
     
+    'cloudinary',
+    'cloudinary_storage',
+
     # Local apps - humara main app
     'items',
 ]
@@ -132,14 +135,16 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+
 STORAGES = {
     'default': {
-        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
     },
     'staticfiles': {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
     },
 }
+
   # Additional static folders
 
 # Media files configuration - user uploaded files ke liye
@@ -157,3 +162,12 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 LOGIN_REDIRECT_URL = 'item_list'  # Login ke baad yahan redirect hoga
 LOGOUT_REDIRECT_URL = 'item_list'  # Logout ke baad yahan redirect hoga
 LOGIN_URL = 'login'  # Login page ka URL
+
+# Cloudinary configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
